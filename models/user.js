@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-//const bcrypt = require('bcrypt');
+const SHA256 = require('crypto-js/SHA256')
 const Schema = mongoose.Schema;
 
 var UserSchema = Schema({
@@ -19,22 +19,11 @@ var UserSchema = Schema({
   }
 });
 
-/*UserSchema.pre('save', (next)=>{
+UserSchema.pre('save', (next)=>{
   let user = this;
-    bcrypt.genSalt(10, (err, salt)=>{
-      if(err){
-        return next(err)
-      }else{
-        bcrypt.hash(user.password, salt, null, (err, hash)=>{
-          if(err){
-            return next(err)
-          }else{
-            user.password = hash;
-            next()
-          }
-        })
-      }
-    })
-});*/
+  let hash = SHA256(user.password).toString();
+  user.password = hash;
+  next();
+});
 
 module.exports = mongoose.model('User', UserSchema);
