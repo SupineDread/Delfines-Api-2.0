@@ -5,10 +5,10 @@ const api = express.Router();
 const remesaController = require('../controllers/remesa');
 
 //Aqui van las rutas
-api.post('/saveremesa', remesaController.saveRemesa);
-api.put('/updateremesa/:id', remesaController.updateRemesa);
-api.delete('/deleteremesa/:id', remesaController.deleteRemesa);
+api.post('/remesa', remesaController.saveRemesa);
+api.put('/remesa/:id', remesaController.updateRemesa);
+api.delete('/remesa/:id', remesaController.deleteRemesa);
 api.get('/remesa/:id', remesaController.getRemesa);
-api.get('/remesas/:idCliente?', remesaController.getRemesas);
+api.get('/remesa/:idCliente?', remesaController.getRemesas);
 
 module.exports = api;

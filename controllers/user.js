@@ -2,7 +2,7 @@
 
 const User = require('../models/user');
 const gravatar = require('gravatar');
-const SHA256 = require('crypto-js/SHA256');
+const SHA256 = require('crypto-js/sha256');
 
 function saveUser(req, res) {
   let user = new User();
@@ -12,6 +12,7 @@ function saveUser(req, res) {
   user.password = SHA256(params.password).toString();
   user.email = params.email;
   user.avatar = gravatar.url(params.email, {s: '100', r: 'x', d: 'retro'}, true);
+  user.pin =  Math.floor(Math.random()*(9999 - 1001) + 1000);
 
   user.save((err, userSaved)=>{
     if(err){console.log(err);return res.status(500).send({message: 'Error con el servidor al guardar al usuario'});}
