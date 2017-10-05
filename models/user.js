@@ -1,16 +1,25 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const SHA256 = require('crypto-js/SHA256')
 const Schema = mongoose.Schema;
 
 var UserSchema = Schema({
   name: String,
   username: String,
-  password: String,
+  password: {
+    type: String,
+    select: false
+  },
   pin: {
     type:String,
     unique: true
+  },
+  email: {
+    type: String,
+    unique: true
+  },
+  avatar: {
+    type: String
   },
   role:{
     type: String,
@@ -18,12 +27,4 @@ var UserSchema = Schema({
     default: 'MUCHACHO'
   }
 });
-
-UserSchema.pre('save', (next)=>{
-  let user = this;
-  let hash = SHA256(user.password).toString();
-  user.password = hash;
-  next();
-});
-
 module.exports = mongoose.model('User', UserSchema);

@@ -72,7 +72,7 @@ function getRemesas(req, res) {
     var find = Remesa.find({}).sort('-nombreProducto');
   }else{
     //Obtener todas las remesas asociados a un provedor
-    var find = Remesa.find({provedor: idCliente}).sort('-nombreProducto');
+    var find = Remesa.find({cliente: idCliente}).sort('-nombreProducto');
   }
   find.exec((err, remesas)=>{
     if(err){
