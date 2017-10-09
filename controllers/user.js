@@ -2,14 +2,16 @@
 
 const User = require('../models/user');
 const gravatar = require('gravatar');
-const SHA256 = require('crypto-js/sha256');
+const AES =  require('crypto-js/aes');
+const config = require('../config');
 
 function saveUser(req, res) {
   let user = new User();
   let params = req.body;
   user.name = params.nombre;
   user.username = params.username;
-  user.password = SHA256(params.password).toString();
+  let pass = AES.encrypt(params.password, config.key);
+  user.password = pass.toString();
   user.email = params.email;
   user.avatar = gravatar.url(params.email, {s: '100', r: 'x', d: 'retro'}, true);
   user.pin =  Math.floor(Math.random()*(9999 - 1001) + 1000);
