@@ -9,6 +9,6 @@ api.post('/cliente', clienteController.saveClient);
 api.delete('/cliente/:id', clienteController.deleteClient);
 api.put('/cliente/:id', clienteController.updateClient);
 api.get('/cliente/:id', clienteController.getClient);
-api.get('/cliente', clienteController.getClients);
+api.get('/clientes', clienteController.getClients);
 
 module.exports = api;

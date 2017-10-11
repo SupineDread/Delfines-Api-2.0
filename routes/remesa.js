@@ -9,6 +9,6 @@ api.post('/remesa', remesaController.saveRemesa);
 api.put('/remesa/:id', remesaController.updateRemesa);
 api.delete('/remesa/:id', remesaController.deleteRemesa);
 api.get('/remesa/:id', remesaController.getRemesa);
-api.get('/remesa/:idCliente?', remesaController.getRemesas);
+api.get('/remesas/:idCliente?', remesaController.getRemesas);
 
 module.exports = api;

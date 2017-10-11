@@ -2,6 +2,7 @@
 
 const Remesa = require('../models/remesa');
 const Cliente = require('../models/cliente');
+const Entrada = require('../models/acciones/entrada');
 
 function saveRemesa(req, res) {
   let remesa = new Remesa();
@@ -18,6 +19,15 @@ function saveRemesa(req, res) {
     if(err) res.status(500).send({message: 'Error con el servidor al guardar la remesa'});
     if(!remesaStored) res.status(404).send({message: 'No hay remesa por guardar'});
     res.status(200).send({remesa: remesaStored});
+
+    let entrada = new Entrada();
+    entrada.remesa = remesaStored._id;
+    entrada.user = params.user;
+
+    entrada.save((err, entradaStored)=>{
+      if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
+      if(!entradaStored) res.status(404).send({message: 'No hay entrada por guardar'});
+    })
   });
 }
 

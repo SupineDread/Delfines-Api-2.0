@@ -9,6 +9,7 @@ const accion_routes = require('./routes/accion');
 const cliente_routes = require('./routes/cliente');
 const remesa_routes = require('./routes/remesa');
 const user_routes = require('./routes/user');
+const acciones_routes = require('./routes/accion');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -27,5 +28,6 @@ app.use('/api', accion_routes);
 app.use('/api', cliente_routes);
 app.use('/api', remesa_routes);
 app.use('/api', user_routes);
+app.use('/api', accion_routes)
 
 module.exports = app;

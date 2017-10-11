@@ -31,7 +31,7 @@ var RemesaSchema = Schema({
   },
   estancia: {
     type: Number,
-    enum: [1,2,3,4]
+    enum: [1,2,3,4,5]
   },
   status: {
     type: String,
