@@ -9,5 +9,6 @@ api.put('/remesa/retiro/:id', accionController.remesaRetiro);
 api.put('/remesa/cambioestancia/:id', accionController.remesaCambioEstancia);
 api.put('/remesa/cambiotarifa/:id', accionController.remesaCambioTarifa);
 api.put('/remesa/finalizar/:id', accionController.remesaFinalizar);
+api.get('/remesa/acciones/:id', accionController.getAcciones);
 
 module.exports = api;
