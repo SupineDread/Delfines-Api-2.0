@@ -45,7 +45,6 @@ function remesaCambioEstancia(req, res) {
     Remesa.findByIdAndUpdate(remesaId, {estancia: nuevaEstancia}, (err, remesaUpdated)=>{
       if(err) res.status(500).send({message: 'Error al actualizar la remesa'});
       if(!remesaUpdated) res.status(404).send({message: 'No hay remesa por guardar'});
-      //res.status(200).send({remesaUpdated});
 
       let estancia = new accionCambioEstancia();
       estancia.remesa = remesaUpdated._id;
@@ -120,7 +119,28 @@ function getAcciones(req, res) {
   accionEntrada.find({remesa: remesaId}).exec ((err, entradas)=>{
     if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
     if(!entradas) res.status(404).send({message: 'No hay usuarios'});
-    res.status(200).send({entradas});
+
+    accionFinalizar.find({remesa: remesaId}).exec ((err, finalizadas)=>{
+      if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
+      if(!finalizadas) res.status(404).send({message: 'No hay usuarios'});
+
+      accionCambioEstancia.find({remesa:remesaId}).exec ((err, cambioestancia)=>{
+        if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
+        if(!cambioestancia) res.status(404).send({message: 'No hay usuarios'});
+
+        accionCambioTarifa.find({remesa: remesaId}).exec ((err, cambiotarifas)=>{
+          if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
+          if(!cambiotarifas) res.status(404).send({message: 'No hay usuarios'});
+
+          accionRetiro.find({remesa: remesaId}).exec ((err, accionretiros)=>{
+            if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
+            if(!accionretiros) res.status(404).send({message: 'No hay usuarios'});
+
+            res.status(200).send({entradas, accionretiros, cambiotarifas, cambioestancia, finalizadas});
+          });
+        });
+      });
+    });
   });
 }
 
