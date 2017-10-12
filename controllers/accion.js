@@ -87,7 +87,6 @@ function remesaCambioTarifa(req, res) {
   });
 }
 
-//Con solo hacer el put a esta ruta se cambia el estado de la remesa
 function remesaFinalizar(req, res) {
   let remesaId = req.params.id;
 
@@ -116,25 +115,28 @@ function remesaFinalizar(req, res) {
 function getAcciones(req, res) {
   let remesaId = req.params.id;
 
-  accionEntrada.find({remesa: remesaId}).exec ((err, entradas)=>{
-    if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
-    if(!entradas) res.status(404).send({message: 'No hay usuarios'});
+  accionEntrada.find({remesa: remesaId}).populate({path:'user'}).populate({path: 'remesa'}).exec ((err, entradas)=>{
+    if(err) res.status(500).send({messsage: 'Error al obtener las entradas'});
+    if(!entradas) res.status(404).send({message: 'No hay entradas'});
+    /*Remesa.populate(entradas, {path: 'remesa'}, (err, entradas)=>{
 
-    accionFinalizar.find({remesa: remesaId}).exec ((err, finalizadas)=>{
-      if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
-      if(!finalizadas) res.status(404).send({message: 'No hay usuarios'});
+    });*/
 
-      accionCambioEstancia.find({remesa:remesaId}).exec ((err, cambioestancia)=>{
-        if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
-        if(!cambioestancia) res.status(404).send({message: 'No hay usuarios'});
+    accionFinalizar.find({remesa: remesaId}).populate({path:'user'}).populate({path: 'remesa'}).exec ((err, finalizadas)=>{
+      if(err) res.status(500).send({messsage: 'Error al obtener las acciones de finalizar'});
+      if(!finalizadas) res.status(404).send({message: 'No hay acciones de finalizar'});
 
-        accionCambioTarifa.find({remesa: remesaId}).exec ((err, cambiotarifas)=>{
-          if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
-          if(!cambiotarifas) res.status(404).send({message: 'No hay usuarios'});
+      accionCambioEstancia.find({remesa:remesaId}).populate({path: 'user'}).populate({path: 'remesa'}).exec ((err, cambioestancia)=>{
+        if(err) res.status(500).send({messsage: 'Error al obtener las acciones de cambio de estancia'});
+        if(!cambioestancia) res.status(404).send({message: 'No hay acciones de cambio de estancia'});
 
-          accionRetiro.find({remesa: remesaId}).exec ((err, accionretiros)=>{
-            if(err) res.status(500).send({messsage: 'Error al obtener los usuarios'});
-            if(!accionretiros) res.status(404).send({message: 'No hay usuarios'});
+        accionCambioTarifa.find({remesa: remesaId}).populate({path: 'user'}).populate({path: 'remesa'}).exec ((err, cambiotarifas)=>{
+          if(err) res.status(500).send({messsage: 'Error al obtener las acciones de cambio de tarifa'});
+          if(!cambiotarifas) res.status(404).send({message: 'No hay acciones de cambio de tarifa'});
+
+          accionRetiro.find({remesa: remesaId}).populate({path: 'user'}).populate({path: 'remesa'}).exec ((err, accionretiros)=>{
+            if(err) res.status(500).send({messsage: 'Error al obtener las acciones de retiro'});
+            if(!accionretiros) res.status(404).send({message: 'No hay acciones de retiro'});
 
             res.status(200).send({entradas, accionretiros, cambiotarifas, cambioestancia, finalizadas});
           });
