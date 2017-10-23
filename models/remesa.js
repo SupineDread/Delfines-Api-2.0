@@ -38,6 +38,12 @@ var RemesaSchema = Schema({
     enum: ['STATUS_ACTIVO', 'STATUS_INACTIVO'],
     default: 'STATUS_ACTIVO',
     required: true
+  },
+  fechaSalida: {
+    type: String
+  },
+  proximaFechaCobro: {
+    type: String
   }
 });
 
