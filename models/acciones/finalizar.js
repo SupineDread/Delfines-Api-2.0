@@ -11,9 +11,8 @@ const FinalizarSchema =  mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  fechacambio:{
-    type: Date,
-    default: Date.now
+  fechaFinalizar:{
+    type: String
   }
 });
 

@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 const Remesa = require('../models/remesa');
 const accionRetiro = require('../models/acciones/retiro');
 const accionCambioTarifa = require('../models/acciones/cambiotarifa');
@@ -24,6 +25,7 @@ function remesaRetiro(req, res) {
       retiro.remesa = remesaUpdated._id;
       retiro.user = req.body.user;
       retiro.cantidadretirada = cantidadretirada;
+      retiro.fechaRetiro =  moment().format('l');
 
       retiro.save((err, retiroSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
@@ -50,6 +52,7 @@ function remesaCambioEstancia(req, res) {
       estancia.remesa = remesaUpdated._id;
       estancia.user = req.body.user;
       estancia.nuevaestancia = nuevaEstancia;
+      estancia.fechaCambio = moment().format('l');
 
       estancia.save((err, estanciaSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
@@ -64,7 +67,7 @@ function remesaCambioTarifa(req, res) {
   let remesaId = req.params.id;
   let nuevaTarifa = req.body.nuevatarifa;
 
-  Remesa.findById(remesaId, (err, remesa)=>{a
+  Remesa.findById(remesaId, (err, remesa)=>{
     if (err) return res.status(500).send({message: 'Error al obtener la remesa'});
     if (!remesa) return res.status(404).send({message: 'No hay remesa por actualizar'});
 
@@ -77,6 +80,7 @@ function remesaCambioTarifa(req, res) {
       tarifa.remesa = remesaUpdated._id;
       tarifa.user = req.body.user;
       tarifa.nuevatarifa = nuevaTarifa;
+      tarifa.fechaCambio = moment().format('l');
 
       tarifa.save((err, tarifaSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
@@ -97,11 +101,11 @@ function remesaFinalizar(req, res) {
     Remesa.findByIdAndUpdate(remesaId, {status: 'STATUS_INACTIVO'}, (err, remesaUpdated)=>{
       if(err) res.status(500).send({message: 'Error al actualizar la remesa'});
       if(!remesaUpdated) res.status(404).send({message: 'No hay remesa por guardar'});
-      //res.status(200).send({remesaUpdated});
 
       let finalizar = new accionFinalizar();
       finalizar.remesa = remesaUpdated._id;
       finalizar.user = req.body.user;
+      finalizar.fechaFinalizar = moment().format('l');
 
       finalizar.save((err, finalizarSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});

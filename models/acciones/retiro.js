@@ -11,9 +11,8 @@ const RetiroSchema =  mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  fecharetiro:{
-    type: Date,
-    default: Date.now
+  fechaRetiro:{
+    type: String
   },
   cantidadRetirada: {
     type: String

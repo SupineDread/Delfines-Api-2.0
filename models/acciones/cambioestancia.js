@@ -11,9 +11,8 @@ const EstanciaSchema =  mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  fechacambio:{
-    type: Date,
-    default: Date.now
+  fechaCambio:{
+    type: String
   },
   nuevaestancia: {
     type: Number

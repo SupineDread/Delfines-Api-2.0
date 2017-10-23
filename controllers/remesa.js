@@ -3,6 +3,7 @@
 const Remesa = require('../models/remesa');
 const Cliente = require('../models/cliente');
 const Entrada = require('../models/acciones/entrada');
+const moment = require('moment');
 
 function saveRemesa(req, res) {
   let remesa = new Remesa();
@@ -14,6 +15,8 @@ function saveRemesa(req, res) {
   remesa.tarifa = params.tarifa;
   remesa.estancia = params.estancia;
   remesa.cliente = params.cliente;
+  remesa.fechaEntrada = moment().format('l');
+  remesa.proximaFechaCobro = moment().add(1, 'month').calendar();
 
   remesa.save((err, remesaStored)=>{
     if(err) res.status(500).send({message: 'Error con el servidor al guardar la remesa'});
@@ -23,6 +26,7 @@ function saveRemesa(req, res) {
     let entrada = new Entrada();
     entrada.remesa = remesaStored._id;
     entrada.user = params.user;
+    entrada.fechaIngreso = moment().format('l');
 
     entrada.save((err, entradaStored)=>{
       if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});

@@ -39,7 +39,7 @@ var RemesaSchema = Schema({
     default: 'STATUS_ACTIVO',
     required: true
   },
-  fechaSalida: {
+  fechaEntrada: {
     type: String
   },
   proximaFechaCobro: {

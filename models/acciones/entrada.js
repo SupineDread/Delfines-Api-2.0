@@ -11,9 +11,8 @@ const EntradaSchema =  mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  fechaingreso:{
-    type: Date,
-    default: Date.now
+  fechaIngreso:{
+    type: String
   }
 });
 
