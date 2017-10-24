@@ -7,8 +7,7 @@ var UserSchema = Schema({
   name: String,
   username: String,
   password: {
-    type: String,
-    select: false
+    type: String
   },
   pin: {
     type:String,
@@ -22,7 +21,7 @@ var UserSchema = Schema({
     type: String
   },
   role:{
-    type: String,
+    type: [String],
     enum: ['ADMIN', 'MUCHACHO'],
     default: 'MUCHACHO'
   }
