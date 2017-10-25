@@ -25,6 +25,9 @@ var RemesaSchema = Schema({
     type:Number,
     required: true
   },
+  pesoPromedio: {
+    type: Number
+  },
   tarifa: {
     type:Number,
     required: true

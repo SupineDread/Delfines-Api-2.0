@@ -14,9 +14,10 @@ function saveRemesa(req, res) {
   remesa.peso = params.peso;
   remesa.tarifa = params.tarifa;
   remesa.estancia = params.estancia;
-  remesa.cliente = params.cliente;
   remesa.fechaEntrada = moment().format('l');
   remesa.proximaFechaCobro = moment().add(1, 'month').calendar();
+  remesa.pesoPromedio = Math.floor(params.peso/params.cantidadEmpaques);
+  remesa.cliente = params.cliente;
 
   remesa.save((err, remesaStored)=>{
     if(err) res.status(500).send({message: 'Error con el servidor al guardar la remesa'});
