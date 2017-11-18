@@ -1,9 +1,8 @@
-'use strict';
-
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+const findOrCreate = require('mongoose-find-or-create')
 const Schema = mongoose.Schema;
 
-var UserSchema = Schema({
+const UserSchema = Schema({
   name: String,
   username: String,
   password: {
@@ -26,4 +25,7 @@ var UserSchema = Schema({
     default: 'MUCHACHO'
   }
 });
+
+UserSchema.plugin(findOrCreate)
+
 module.exports = mongoose.model('User', UserSchema);
