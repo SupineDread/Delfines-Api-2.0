@@ -7,8 +7,8 @@
     "start": "nodemon index.js"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/SupineDread/Delfines-Api-2.0.git"
+    "type": "git",
+    "url": "https://github.com/SupineDread/Delfines-Api-2.0.git"
   },
   "author": "HRFE",
   "license": "MIT",

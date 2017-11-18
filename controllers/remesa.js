@@ -4,6 +4,7 @@ const Remesa = require('../models/remesa');
 const Cliente = require('../models/cliente');
 const Entrada = require('../models/acciones/entrada');
 const moment = require('moment');
+moment.locale('es');
 
 function saveRemesa(req, res) {
   let remesa = new Remesa();
@@ -14,24 +15,26 @@ function saveRemesa(req, res) {
   remesa.peso = params.peso;
   remesa.tarifa = params.tarifa;
   remesa.estancia = params.estancia;
-  remesa.fechaEntrada = moment().format('l');
-  remesa.proximaFechaCobro = moment().add(1, 'month').calendar();
-  remesa.pesoPromedio = Math.floor(params.peso/params.cantidadEmpaques);
+  //remesa.fechaEntrada = moment().format('l');
+  remesa.fechaEntrada =  moment().format('MMMM Do YYYY, h:mm a');
+  remesa.proximaFechaCobro = moment().add(1, 'month').format('MMMM Do YYYY, h:mm a');
+  remesa.pesoPromedio = Math.floor(params.peso/params.cantidadempaques);
   remesa.cliente = params.cliente;
 
   remesa.save((err, remesaStored)=>{
-    if(err) res.status(500).send({message: 'Error con el servidor al guardar la remesa'});
-    if(!remesaStored) res.status(404).send({message: 'No hay remesa por guardar'});
-    res.status(200).send({remesa: remesaStored});
+    if(err) return res.status(500).send({message: 'Error con el servidor al guardar la remesa'});
+    if(!remesaStored) return res.status(404).send({message: 'No hay remesa por guardar'});
 
     let entrada = new Entrada();
     entrada.remesa = remesaStored._id;
     entrada.user = params.user;
-    entrada.fechaIngreso = moment().format('l');
+    //entrada.fechaIngreso = moment().format('l');
+    entrada.fechaIngreso = moment().format('MMMM Do YYYY, h:mm a');
 
     entrada.save((err, entradaStored)=>{
-      if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
-      if(!entradaStored) res.status(404).send({message: 'No hay entrada por guardar'});
+      if(err) return res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
+      if(!entradaStored) return res.status(404).send({message: 'No hay entrada por guardar'});
+      return res.status(200).send({remesa: remesaStored});
     })
   });
 }
@@ -84,10 +87,10 @@ function getRemesas(req, res) {
 
   if(!idCliente){
     //Obtener todas las remesas
-    var find = Remesa.find({}).sort('-nombreProducto');
+    var find = Remesa.find({}).sort('-fechaEntrada');
   }else{
-    //Obtener todas las remesas asociados a un provedor
-    var find = Remesa.find({cliente: idCliente}).sort('-nombreProducto');
+    //Obtener todas las remesas asociados a un cliente
+    var find = Remesa.find({cliente: idCliente}).sort('-fechaEntrada');
   }
   find.exec((err, remesas)=>{
     if(err){
@@ -108,10 +111,19 @@ function getRemesas(req, res) {
   });
 }
 
+function getCobrosHoy(req, res) {
+  Remesa.find({proximaFechaCobro: moment().format('l')}, (err, remesas)=>{
+    if(err) return res.status(500).send({message: 'No se han podido obtener las remesas de hoy'});
+    if(!remesas) return res.status(404).send({message: 'No se han podido obtener las remesas'});
+    return res.status(200).send({remesas});
+  });
+}
+
 module.exports = {
   saveRemesa,
   deleteRemesa,
   updateRemesa,
   getRemesa,
-  getRemesas
+  getRemesas,
+  getCobrosHoy
 }

@@ -18,7 +18,7 @@ var RemesaSchema = Schema({
     required: true
   },
   cantidadEmpaques: {
-    type: String,
+    type: Number,
     required: true
   },
   peso: {

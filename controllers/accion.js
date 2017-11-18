@@ -25,7 +25,7 @@ function remesaRetiro(req, res) {
       retiro.remesa = remesaUpdated._id;
       retiro.user = req.body.user;
       retiro.cantidadretirada = cantidadretirada;
-      retiro.fechaRetiro =  moment().format('l');
+      retiro.fechaRetiro =  moment().format('MMMM Do YYYY, h:mm a');
 
       retiro.save((err, retiroSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
@@ -52,7 +52,7 @@ function remesaCambioEstancia(req, res) {
       estancia.remesa = remesaUpdated._id;
       estancia.user = req.body.user;
       estancia.nuevaestancia = nuevaEstancia;
-      estancia.fechaCambio = moment().format('l');
+      estancia.fechaCambio = moment().format('MMMM Do YYYY, h:mm a');
 
       estancia.save((err, estanciaSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
@@ -80,7 +80,7 @@ function remesaCambioTarifa(req, res) {
       tarifa.remesa = remesaUpdated._id;
       tarifa.user = req.body.user;
       tarifa.nuevatarifa = nuevaTarifa;
-      tarifa.fechaCambio = moment().format('l');
+      tarifa.fechaCambio = moment().format('MMMM Do YYYY, h:mm a');
 
       tarifa.save((err, tarifaSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
@@ -105,7 +105,7 @@ function remesaFinalizar(req, res) {
       let finalizar = new accionFinalizar();
       finalizar.remesa = remesaUpdated._id;
       finalizar.user = req.body.user;
-      finalizar.fechaFinalizar = moment().format('l');
+      finalizar.fechaFinalizar = moment().format('MMMM Do YYYY, h:mm a');
 
       finalizar.save((err, finalizarSaved)=>{
         if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
