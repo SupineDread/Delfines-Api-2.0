@@ -1,5 +1,3 @@
-'use strict';
-
 const Remesa = require('../models/remesa');
 const Cliente = require('../models/cliente');
 const Entrada = require('../models/acciones/entrada');
@@ -16,8 +14,8 @@ function saveRemesa(req, res) {
   remesa.tarifa = params.tarifa;
   remesa.estancia = params.estancia;
   //remesa.fechaEntrada = moment().format('l');
-  remesa.fechaEntrada =  moment().format('MMMM Do YYYY, h:mm a');
-  remesa.proximaFechaCobro = moment().add(1, 'month').format('MMMM Do YYYY, h:mm a');
+  remesa.fechaEntrada =  moment().format('MMMM Do YYYY');
+  remesa.proximaFechaCobro = moment().add(1, 'month').format('MMMM Do YYYY');
   remesa.pesoPromedio = Math.floor(params.peso/params.cantidadempaques);
   remesa.cliente = params.cliente;
 
@@ -82,7 +80,7 @@ function getRemesa(req, res) {
   });
 }
 
-function getRemesas(req, res) {
+const getRemesas = (req, res) => {
   let idCliente = req.params.idCliente;
 
   if(!idCliente){
@@ -94,7 +92,7 @@ function getRemesas(req, res) {
   }
   find.exec((err, remesas)=>{
     if(err){
-      res.status(500).send({message: 'Error con el servidor'});
+      res.status(500).send({message: 'Error con el servidor al obtener las remesas'});
     }else{
       if(!remesas){
         res.status(404).send({message: 'Este cliente no tiene remesas'});
@@ -111,10 +109,10 @@ function getRemesas(req, res) {
   });
 }
 
-function getCobrosHoy(req, res) {
-  Remesa.find({proximaFechaCobro: moment().format('l')}, (err, remesas)=>{
+const getCobrosHoy = (req, res) => {
+  Remesa.find({proximaFechaCobro: moment().format('MMMM Do YYYY')}, (err, remesas)=>{
     if(err) return res.status(500).send({message: 'No se han podido obtener las remesas de hoy'});
-    if(!remesas) return res.status(404).send({message: 'No se han podido obtener las remesas'});
+    if(!remesas) return res.status(404).send({message: 'No se han podido obtener las remesas de hoy'});
     return res.status(200).send({remesas});
   });
 }
