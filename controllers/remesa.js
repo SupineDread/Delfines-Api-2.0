@@ -13,7 +13,6 @@ function saveRemesa(req, res) {
   remesa.peso = params.peso;
   remesa.tarifa = params.tarifa;
   remesa.estancia = params.estancia;
-  //remesa.fechaEntrada = moment().format('l');
   remesa.fechaEntrada =  moment().format('MMMM Do YYYY');
   remesa.proximaFechaCobro = moment().add(1, 'month').format('MMMM Do YYYY');
   remesa.pesoPromedio = Math.floor(params.peso/params.cantidadempaques);
@@ -84,11 +83,9 @@ const getRemesas = (req, res) => {
   let idCliente = req.params.idCliente;
 
   if(!idCliente){
-    //Obtener todas las remesas
-    var find = Remesa.find({}).sort('-fechaEntrada');
+    var find = Remesa.find({status: 'STATUS_ACTIVO'}).sort('-fechaEntrada');
   }else{
-    //Obtener todas las remesas asociados a un cliente
-    var find = Remesa.find({cliente: idCliente}).sort('-fechaEntrada');
+    var find = Remesa.find({cliente: idCliente, status: 'STATUS_ACTIVO'}).sort('-fechaEntrada');
   }
   find.exec((err, remesas)=>{
     if(err){

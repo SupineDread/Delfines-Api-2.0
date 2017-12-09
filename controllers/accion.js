@@ -83,8 +83,8 @@ function remesaCambioTarifa(req, res) {
       tarifa.fechaCambio = moment().format('MMMM Do YYYY, h:mm a');
 
       tarifa.save((err, tarifaSaved)=>{
-        if(err) res.status(500).send({message: 'Error con el servidor al guardar la entrada de remesa'});
-        if(!tarifaSaved) res.status(404).send({message: 'No hay entrada por guardar'});
+        if(err) res.status(500).send({message: 'Error con el servidor al guardar el cambio de tarifa'});
+        if(!tarifaSaved) res.status(404).send({message: 'No hay cambio de tarifa por guardar'});
         res.status(200).send({remesaUpdated});
       });
     });
