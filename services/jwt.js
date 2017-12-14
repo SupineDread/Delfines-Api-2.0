@@ -2,6 +2,8 @@ const jwt = require('jwt-simple');
 const moment = require('moment');
 const config = require('../config');
 
+const clave = 'clavedetokenasibiensecretaquenadiesabe'
+
 exports.createToken = function(user) {
   let payload ={
     sub: user._id,
@@ -12,5 +14,5 @@ exports.createToken = function(user) {
     iat: moment().unix(),
     exp: moment().add(15, 'days').unix()
   }
-  return jwt.encode(payload, config.SECRET_TOKEN)
+  return jwt.encode(payload, clave)
 }
