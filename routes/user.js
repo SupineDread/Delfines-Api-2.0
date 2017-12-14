@@ -10,4 +10,6 @@ api.post('/user', userController.saveUser);
 api.delete('/user/:id', userController.deleteUser);
 api.put('/user/:id', userController.updateUser);
 
+api.post('/login', userController.login)
+
 module.exports = api;
