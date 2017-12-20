@@ -20,8 +20,7 @@ const UserSchema = Schema({
     type: String
   },
   role:{
-    type: [String],
-    enum: ['ADMIN', 'MUCHACHO']
+    type: String
   }
 });
 
