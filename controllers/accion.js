@@ -23,7 +23,7 @@ function remesaRetiro(req, res) {
 
       let retiro =  new accionRetiro();
       retiro.remesa = remesaUpdated._id;
-      retiro.user = req.body.user;
+      retiro.user = req.user.sub;
       retiro.cantidadretirada = cantidadretirada;
       retiro.fechaRetiro =  moment().format('MMMM Do YYYY, h:mm a');
 
@@ -50,7 +50,7 @@ function remesaCambioEstancia(req, res) {
 
       let estancia = new accionCambioEstancia();
       estancia.remesa = remesaUpdated._id;
-      estancia.user = req.body.user;
+      estancia.user = req.user.sub;
       estancia.nuevaestancia = nuevaEstancia;
       estancia.fechaCambio = moment().format('MMMM Do YYYY, h:mm a');
 
@@ -78,7 +78,7 @@ function remesaCambioTarifa(req, res) {
 
       let tarifa = new accionCambioTarifa();
       tarifa.remesa = remesaUpdated._id;
-      tarifa.user = req.body.user;
+      tarifa.user = req.user.sub;
       tarifa.nuevatarifa = nuevaTarifa;
       tarifa.fechaCambio = moment().format('MMMM Do YYYY, h:mm a');
 
@@ -104,7 +104,7 @@ function remesaFinalizar(req, res) {
 
       let finalizar = new accionFinalizar();
       finalizar.remesa = remesaUpdated._id;
-      finalizar.user = req.body.user;
+      finalizar.user = req.user.sub;
       finalizar.fechaFinalizar = moment().format('MMMM Do YYYY, h:mm a');
 
       finalizar.save((err, finalizarSaved)=>{

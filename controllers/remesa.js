@@ -24,7 +24,7 @@ function saveRemesa(req, res) {
 
     let entrada = new Entrada();
     entrada.remesa = remesaStored._id;
-    entrada.user = params.user;
+    entrada.user = req.user.sub;
     //entrada.fechaIngreso = moment().format('l');
     entrada.fechaIngreso = moment().format('MMMM Do YYYY, h:mm a');
 
