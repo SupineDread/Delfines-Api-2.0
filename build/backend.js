@@ -937,13 +937,14 @@ const express = __webpack_require__(1);
 const api = express.Router();
 const userController = __webpack_require__(27);
 const auth = __webpack_require__(3)
+const admin = __webpack_require__(29)
 
 //Estas rutas solo las ve el administrador
-api.get('/users', userController.getUsers);
-api.get('/user/:id', userController.getUser);
-api.post('/user', userController.saveUser);
-api.delete('/user/:id', userController.deleteUser);
-api.put('/user/:id', userController.updateUser);
+api.get('/users', [auth.ensureAuth, admin .isAdmin], userController.getUsers);
+api.get('/user/:id', [auth.ensureAuth, admin .isAdmin], userController.getUser);
+api.post('/user',[auth.ensureAuth, admin.isAdmin], userController.saveUser);
+api.delete('/user/:id',[auth.ensureAuth, admin.isAdmin], userController.deleteUser);
+api.put('/user/:id', auth.ensureAuth, userController.updateUser);
 
 api.post('/login', userController.login)
 
@@ -1081,6 +1082,18 @@ exports.createToken = function(user) {
     exp: moment().add(15, 'days').unix()
   }
   return jwt.encode(payload, clave)
+}
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+exports.isAdmin = function(req, res, next){
+  if (req.user.role != 'ROLE_ADMIN') {
+    return res.status(200).send({message: 'No tienes acceso a esta seccion'})
+  }
+  next()
 }
 
 
