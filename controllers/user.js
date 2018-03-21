@@ -3,7 +3,7 @@
 const User = require('../models/user');
 const gravatar = require('gravatar');
 const bcrypt = require('bcrypt-nodejs');
-const jwt = require('../services/jwt')
+const jwt = require('../services/jwt');
 
 function saveUser(req, res) {
   let user = new User();
